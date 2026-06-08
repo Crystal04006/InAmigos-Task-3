@@ -1,0 +1,10 @@
+{
+  "name": "north-and-pine",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd Task-3/Frontend && npm start",
+    "start": "cd Task-3/Frontend && npm start",
+    "build": "cd Task-3/Frontend && npm run build"
+  }
+}
