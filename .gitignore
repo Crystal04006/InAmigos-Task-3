@@ -1,0 +1,15 @@
+# Ignore Python virtual environments
+venv/
+.venv/
+ENV/
+
+# Ignore Frontend dependency modules
+node_modules/
+
+# Ignore local environment variable files
+.env
+
+# Ignore build cache files
+.cache/
+dist/
+build/
