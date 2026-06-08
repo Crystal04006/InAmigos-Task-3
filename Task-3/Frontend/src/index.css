@@ -1,0 +1,107 @@
+@import url('https://api.fontshare.com/v2/css?f[]=gambarino@400&f[]=switzer@300,400,500,600,700,800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        /* North & Pine — Specialty Coffee Brand */
+        --background: 38 47% 91%;          /* #F4EAD9 cream */
+        --background-alt: 36 38% 85%;      /* #EADFC9 */
+        --foreground: 21 22% 9%;           /* #1A1410 espresso */
+        --muted: 36 38% 85%;
+        --muted-foreground: 28 12% 30%;
+        --card: 0 0% 100%;
+        --card-foreground: 21 22% 9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 21 22% 9%;
+        --primary: 18 87% 40%;             /* #C2410C ember */
+        --primary-foreground: 38 47% 95%;
+        --secondary: 120 14% 20%;          /* #2D3B2D forest */
+        --secondary-foreground: 38 47% 95%;
+        --accent: 30 49% 64%;              /* #D4A574 caramel */
+        --accent-foreground: 21 22% 9%;
+        --destructive: 0 70% 50%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 21 22% 9% / 0.12;
+        --input: 21 22% 9% / 0.15;
+        --ring: 18 87% 40%;
+        --radius: 0.75rem;
+    }
+}
+
+@layer base {
+    * { @apply border-border; }
+    html { scroll-behavior: smooth; }
+    body {
+        margin: 0;
+        font-family: 'Switzer', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-feature-settings: 'ss01';
+    }
+    h1, h2, h3, h4, h5, h6, .font-display {
+        font-family: 'Gambarino', 'Switzer', serif;
+        font-weight: 400;
+    }
+    ::selection {
+        background: #C2410C;
+        color: #F4EAD9;
+    }
+}
+
+@layer utilities {
+    .text-balance { text-wrap: balance; }
+
+    .marquee {
+        animation: marquee 50s linear infinite;
+    }
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    .ticker {
+        animation: ticker 28s linear infinite;
+    }
+    @keyframes ticker {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    .grain::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.06;
+        background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
+        mix-blend-mode: multiply;
+    }
+
+    .underline-wobble {
+        background-image: linear-gradient(transparent calc(100% - 6px), #C2410C 6px);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+}
+
+@layer base {
+    [data-debug-wrapper=\"true\"] { display: contents !important; }
+    [data-debug-wrapper=\"true\"] > * {
+        margin-left: inherit; margin-right: inherit;
+        margin-top: inherit; margin-bottom: inherit;
+        padding-left: inherit; padding-right: inherit;
+        padding-top: inherit; padding-bottom: inherit;
+        column-gap: inherit; row-gap: inherit; gap: inherit;
+        border-left-width: inherit; border-right-width: inherit;
+        border-top-width: inherit; border-bottom-width: inherit;
+        border-left-style: inherit; border-right-style: inherit;
+        border-top-style: inherit; border-bottom-style: inherit;
+        border-left-color: inherit; border-right-color: inherit;
+        border-top-color: inherit; border-bottom-color: inherit;
+    }
+}

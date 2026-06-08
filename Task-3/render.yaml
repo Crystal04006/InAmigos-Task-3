@@ -1,0 +1,19 @@
+services:
+  # 1. Spin up the FastAPI Python Backend
+  - type: web
+    name: north-pine-backend
+    env: python
+    buildCommand: cd Task-3/Backend && pip install -r requirements.txt
+    startCommand: cd Task-3/Backend && uvicorn Server:app --host 0.0.0.0 --port 10000
+    envVars:
+      - key: MONGO_URL
+        value: <YOUR_MONGO_DATABASE_CONNECTION_STRING>
+      - key: DB_NAME
+        value: <YOUR_DB_NAME>
+
+  # 2. Spin up the React Frontend
+  - type: web
+    name: north-pine-frontend
+    env: static
+    buildCommand: cd Task-3/Frontend && npm install && npm run build
+    staticPublishPath: Task-3/Frontend/build
