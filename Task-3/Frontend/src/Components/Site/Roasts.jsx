@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
-const API = `${process.env.REACT_APP_BACKEND_URL || "http://127.0.0.1:8000"}/api`;
+const API = "/api";
 
 export default function Roasts() {
   const [products, setProducts] = useState([]);
