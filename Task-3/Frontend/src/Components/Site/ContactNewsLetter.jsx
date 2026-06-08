@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { ArrowUpRight, Mail } from "lucide-react";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const API = `${process.env.REACT_APP_BACKEND_URL || "http://127.0.0.1:8000"}/api`;
 
 export default function ContactNewsletter() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });

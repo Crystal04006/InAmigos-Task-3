@@ -16,9 +16,13 @@ from datetime import datetime, timezone
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+mongo_url = os.environ.get('MONGO_URL')
+if mongo_url:
+    client = AsyncIOMotorClient(mongo_url)
+    db = client[os.environ.get('DB_NAME', 'north_pine')]
+else:
+    client = None
+    db = None
 
 app = FastAPI(title="North & Pine Coffee API")
 api_router = APIRouter(prefix="/api")
@@ -121,21 +125,24 @@ async def list_products():
 @api_router.post("/contact", response_model=ContactMessage, status_code=201)
 async def submit_contact(payload: ContactCreate):
     msg = ContactMessage(**payload.model_dump())
-    doc = msg.model_dump()
-    doc['created_at'] = doc['created_at'].isoformat()
-    await db.contact_messages.insert_one(doc)
+    if db is not None:
+        doc = msg.model_dump()
+        doc['created_at'] = doc['created_at'].isoformat()
+        await db.contact_messages.insert_one(doc)
     return msg
 
 
 @api_router.post("/newsletter", response_model=NewsletterSub, status_code=201)
 async def subscribe_newsletter(payload: NewsletterCreate):
-    existing = await db.newsletter_subs.find_one({"email": payload.email})
-    if existing:
-        raise HTTPException(status_code=409, detail="This email is already on the list.")
+    if db is not None:
+        existing = await db.newsletter_subs.find_one({"email": payload.email})
+        if existing:
+            raise HTTPException(status_code=409, detail="This email is already on the list.")
     sub = NewsletterSub(email=payload.email)
-    doc = sub.model_dump()
-    doc['created_at'] = doc['created_at'].isoformat()
-    await db.newsletter_subs.insert_one(doc)
+    if db is not None:
+        doc = sub.model_dump()
+        doc['created_at'] = doc['created_at'].isoformat()
+        await db.newsletter_subs.insert_one(doc)
     return sub
 
 
@@ -158,4 +165,5 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
-    client.close()
+    if client:
+        client.close()
